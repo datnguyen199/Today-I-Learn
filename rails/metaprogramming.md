@@ -3,6 +3,23 @@
   + super(): explicit pass argurments
 
 ``` ruby
+module M1
+  def method1(a)
+    puts "this is m1 #{a}"
+  end  
+end
+
+class A
+  include M1
+  
+  def method1(a)
+    super # call method1 of module M1
+    puts "override #{a}"
+  end  
+end 
+```
+
+``` ruby
 module ExecutionTimer
   def call
     time = Time.now
