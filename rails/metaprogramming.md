@@ -1,6 +1,6 @@
 - super and super()
-+ super: will auto pass all argurments of parent
-+ super(): explicit pass argurments
+  + super: will auto pass all argurments of parent
+  + super(): explicit pass argurments
 
 ``` ruby
 module ExecutionTimer
@@ -23,7 +23,7 @@ end
 ```
 
 - define_method: is a (private) method of the object Class, define method for instance to call it
-+ can not call define_method directly inside instance method -> must call in class method or use self.class.send(...) in instance method -> create instance method
+  + can not call define_method directly inside instance method -> must call in class method or use self.class.send(...) in instance method -> create instance method
 ``` ruby
 class MyClass
   define_method(:a_instance_method) do |param1|
@@ -52,7 +52,7 @@ end
 MyClass.class_method1 # will create instance method of MyClass
 ```
 
-- define_singletone_method: define method for object
+- define_singleton_method: define method for object
 ``` ruby
 a = "abc"
 a.define_singleton_method(:hello) { puts "hello" }
