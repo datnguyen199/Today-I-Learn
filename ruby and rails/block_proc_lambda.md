@@ -128,3 +128,63 @@ my_proc = Proc.new { |x| x + 2}
 [1, 2, 3].map(&my_proc)
 # => [3, 4, 5]
 ```
+
+``` ruby
+class Bar
+  define_method(:initialize) do |*pos_params, **named_params, &block|
+    @pos_params = pos_params
+    @named_params = named_params
+    block.call(self) if block
+  end
+  
+  define_method(:one_optional_arg) do |arg=nil|
+    puts arg
+  end
+  
+  define_method(:some_args) do |*args|
+    puts args.join(', ')
+  end
+  
+  define_method(:my_name_and_args) do |name, *args|
+    puts [name, *args].join(' ')
+  end
+  
+  define_method(:some_opts) do |**opts|
+    puts opts.inspect
+  end
+  
+  define_method(:named_arg_plus_opts) do |name:, **opts|
+    puts({ name: name }.merge(opts).inspect)
+  end
+  
+  def print
+    puts @pos_params.join(', ')
+    puts @named_params.inspect
+  end
+end
+
+foo = Bar.new
+foo.one_optional_arg                          # => 
+foo.one_optional_arg 'one'                    # => 'one'
+
+foo.some_args                                 # => 
+foo.some_args 'Hello', 1, :world              # => Hello, 1, world
+
+# foo.my_name_and_args                        # => ERROR wrong number of arguments (given 0, expected 1+)
+foo.my_name_and_args 'David'                  # => David
+foo.my_name_and_args 'David', 'was', 'here'   # => David was here
+
+foo.some_opts                                 # => {}
+foo.some_opts a: 1, b: 2                      # => {:a=>1, :b=>2}
+
+# foo.named_arg_plus_opts                     # => ERROR missing keyword: :name
+foo.named_arg_plus_opts name: 'David'         # => {:name=>"David"}
+foo.named_arg_plus_opts name: 'David', role: 'developer'  
+											  # => {:name=>"David", :role=>"developer"}
+
+BarConstructor.new('The', 'quick', 'brown', 'fox', color: :brown, animal: 'Fox') do |bar|
+  bar.print
+  # The, quick, brown, fox
+  # {:color=>:brown, :animal=>"Fox"}
+end
+```
