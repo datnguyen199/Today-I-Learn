@@ -117,6 +117,22 @@ puts Child.new.ins
 puts Child.cls
 ```
 
+``` ruby
+class A; end
+
+A.class_eval do
+  define_singleton_method :class_method do
+    puts "this is class method of class A"
+  end
+end
+
+A.class_eval do
+  define_method(:instance_method) do
+    puts "this is instance method of class A"
+  end
+end
+```
+
 - method_missing
 ``` ruby
 class User
