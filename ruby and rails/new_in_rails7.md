@@ -69,3 +69,12 @@ previous_user = User.find_by_name('John Doe')
 previous_user.destroy!
 previous_user.previously_persisted? # returns true
 ```
+- excluding
+``` ruby
+=> comments = Comment.excluding(current_user.comments)
+=> "SELECT \"comments\".* FROM \"comments\" WHERE \"comments\".\"id\" NOT IN (1, 2)"
+
+alias without
+=> users = User.without(current_user)
+=> "SELECT \"users\".* FROM \"users\" WHERE \"users\".\"id\" != 1"
+```
