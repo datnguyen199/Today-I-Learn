@@ -42,3 +42,7 @@ end
 ```
 - stripe listen --forward-to localhost:3000/api/v1/stripe-webhooks/webhook --events checkout.session.completed,customer.subscription.deleted,customer.subscription.created --api-key <SECRET_KEY>
 - to use webhook by cli: change ENV[STRIPE_WEBHOOK_SECRET] in .env file to webhook signing secret generate by cli
+- To test use test clock (in case subscription is monthly recurring)
+  + set frozen time: for ex: 15/07/2023 10:00AM
+  + if want to test subscription renew (set advance time after 1 month with frozen time + 1 hour later: 15/08/2023 11:00AM) => will create draft invoice
+  + can `charge customer` to paid invoice immediately
